@@ -137,7 +137,12 @@ text-shadow: 0px 1px #62bfbf;
     <option value="Mathematics">Mathematics</option>
     <option value="Bangla">Bangla</option>
     <option value="English">English</option>
-    <option value="GK">General Knowledge</option>
+     <option value="International Affairs">International Affairs</option>
+  <option value="Bangladesh Affairs">Bangladesh Affairs</option>
+   <option value="Geography">Geography</option>
+      <option value="Computer">Computer</option>
+   
+  
   </select>
 </div>
   <button type="submit" class="btn btn-primary"  name="submit" style="margin-right: 10px;">Submit</button><br>

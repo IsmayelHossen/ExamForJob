@@ -40,10 +40,27 @@ if(isset($_GET['logout'])&&$_GET['logout']=='logout'){
       <h5><a href="subWiseHome.php?category=Mathematics">Mathematics</a></h5>
       </div>
 			</div>
-
+			
+			<div class="col-md-3 ">
+      <div class="subBackground5">
+      <h5><a href="subWiseHome.php?category=Computer">Computer</a></h5>
+      </div>
+		</div>
+		
+				<div class="col-md-3 ">
+      <div class="subBackground6">
+      <h5><a href="subWiseHome.php?category=Bangladesh Affairs">Bangladesh Affairs</a></h5>
+      </div>
+		</div>
+						<div class="col-md-3 ">
+      <div class="subBackground7">
+      <h5><a href="subWiseHome.php?category=International Affairs">International Affairs</a></h5>
+      </div>
+		</div>
+	
       <div class="col-md-3 ">
       <div class="subBackground4">
-      <h5><a href="subWiseHome.php?category=General Knowledge">General Knowledge</a></h5>
+      <h5><a href="subWiseHome.php?category=Geography">Geography</a></h5>
       </div>
 			</div>
 				

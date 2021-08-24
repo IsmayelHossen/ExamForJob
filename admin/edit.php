@@ -63,7 +63,7 @@ else{
         else{
            $quesNo=$_GET['edit'];
           $update="UPDATE questions SET question='$question',option1='$option1',option2='$option2',option3='$option3',option4='$option4',ans='$correctAns'
-          WHERE ques_no=$quesNo AND model=$modelNo ";
+          WHERE ques_no=$quesNo AND model=$modelNo AND subject1='$subject' ";
           $result=$db->update($update);
           if($result){
             $msg='<div class="alert alert-success" id="success-alert">
@@ -156,7 +156,7 @@ else{
         $subject=$_SESSION["subject"];
         $no=$_GET['edit'];
           $model=$_GET['model'];
-       $query1="SELECT*from questions WHERE ques_no='$no' AND model=$model ";
+       $query1="SELECT*from questions WHERE ques_no='$no' AND model=$model AND subject1='$subject' ";
        $result1=$db->select($query1);
        $row1=$result1->fetch_assoc();
         ?>

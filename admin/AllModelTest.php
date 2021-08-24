@@ -148,10 +148,10 @@ if(isset($_POST['submitSwitch'])){
                  ?>
                 <!-- Modal is begain here  -->
                  <!-- Trigger the modal with a button -->
-  <button type="button" class="btn btn-info " data-toggle="modal" data-target="#myModal<?php echo $row['model'].$row['subject1'] ?>">Switch(On/Off)</button>
+  <button type="button" class="btn btn-info " data-toggle="modal" data-target="#myModal<?php echo $row['model'] ?>">Switch(On/Off)</button>
 
 <!-- Modal -->
-<div class="modal fade" id="myModal<?php echo $row['model'].$row['subject1'] ?>" role="dialog">
+<div class="modal fade" id="myModal<?php echo $row['model'] ?>" role="dialog">
   <div class="modal-dialog modal-sm">
     <div class="modal-content">
       <div class="modal-header">

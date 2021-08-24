@@ -169,6 +169,7 @@ class login{
 
 		
 		foreach ($optionS as $key1 => $value) {
+		     $value=str_replace("'", "\'", $value);
 			
 				$query="INSERT INTO examinee_ans(subject1,model,email,ques_no,ans1) VALUES('$cate','$model','$email','$key1','$value')";
 				$result=$this->db->insert($query);
@@ -207,7 +208,7 @@ public function GetTotalQuestion($category,$model){
 		   $subject=$category;
 		   $model=$model;
 		   $query="SELECT DISTINCT examinee_ans.ques_no, examinee_ans.ans1,questions.* FROM examinee_ans INNER JOIN questions
-		    ON examinee_ans.ques_no=questions.ques_no WHERE examinee_ans.email='$email'  AND examinee_ans.subject1='$subject' AND examinee_ans.model=$model AND questions.model=$model  ";
+		    ON examinee_ans.ques_no=questions.ques_no WHERE examinee_ans.email='$email'  AND examinee_ans.subject1='$subject' AND examinee_ans.model=$model AND questions.model=$model AND questions.subject1='$subject'";
 	//$query="SELECT*FROM examinee_ans WHERE email='$email' AND subject1='$subject' AND model='$model' ";
 		   	$result=$this->db->select($query);
 			
@@ -228,7 +229,7 @@ $query="SELECT DISTINCT email FROM examinee_ans WHERE  subject1='$cate' AND mode
 	    //Total Participants result individually
 	   public function AllIndividualScore($email,$subject,$model){
 		$query="SELECT DISTINCT examinee_ans.ques_no, examinee_ans.ans1,questions.ans FROM examinee_ans INNER JOIN questions
-		ON examinee_ans.ques_no=questions.ques_no WHERE examinee_ans.email='$email'  AND examinee_ans.subject1='$subject' AND examinee_ans.model=$model AND questions.model=$model   ";
+		ON examinee_ans.ques_no=questions.ques_no WHERE examinee_ans.email='$email'  AND examinee_ans.subject1='$subject' AND examinee_ans.model=$model AND questions.model=$model  AND questions.subject1='$subject'   ";
 //$query="SELECT*FROM examinee_ans WHERE email='$email' AND subject1='$subject' AND model='$model' ";
 		   $result=$this->db->select($query);
 		

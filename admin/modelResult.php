@@ -130,7 +130,7 @@ if(isset($_POST['submitSwitch'])){
           //again query start
           $email=$rowParent['email'];
           $query="SELECT DISTINCT examinee_ans.ques_no, examinee_ans.ans1,questions.ans FROM examinee_ans INNER JOIN questions
-		ON examinee_ans.ques_no=questions.ques_no WHERE examinee_ans.email='$email'  AND examinee_ans.subject1='$subject' AND examinee_ans.model=$model AND questions.model=$model   ";
+		ON examinee_ans.ques_no=questions.ques_no WHERE examinee_ans.email='$email'  AND examinee_ans.subject1='$subject' AND examinee_ans.model=$model AND questions.model=$model AND questions.subject1='$subject'   ";
 //$query="SELECT*FROM examinee_ans WHERE email='$email' AND subject1='$subject' AND model='$model' ";
 		    $GetForHeighestMark=$db->select($query);
           
