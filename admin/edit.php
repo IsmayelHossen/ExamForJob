@@ -22,7 +22,132 @@ else{
       $db = new Database();
       $fm=new Format();
       if(isset($_POST['submit'])){
-       // error_reporting(0);
+          //if subject is image
+          if($_SESSION["subject"]=='Mathematics'){
+                // error_reporting(0);
+        $modelNo=$_POST['modelNo'];
+        $question=$_POST['question'];
+        
+       // $qusNo=$_POST['queNo'];
+        $option1=$_POST['option1'];
+        $option2=$_POST['option2'];
+        $option3=$_POST['option3'];
+        $option4=$_POST['option4'];
+        $correctAns=$_POST['correctAns'];
+        $subject=$_SESSION["subject"];
+        $email=$_SESSION["email"];
+         $question=str_replace("'", "\'", $question);
+          $option1=str_replace("'", "\'", $option1);
+           $option2=str_replace("'", "\'", $option2);
+            $option3=str_replace("'", "\'", $option3);
+             $option4=str_replace("'", "\'", $option4);
+              $correctAns=str_replace("'", "\'", $correctAns);
+        //  $query1="SELECT*FROM questions ORDER BY ques_no DESC";
+        //   $result1=$db->select($query1);
+        //   $row=$result1->fetch_assoc();
+        //   $count2=$row['ques_no'];
+           
+          
+          
+        //  $query2="SELECT*FROM questions WHERE subject1='$subject' AND model=$modelNo AND ques_no=$count2 ";
+        //   $result3=$db->select($query2);
+         $permited  = array('jpg', 'jpeg', 'png', 'gif');
+       $file_name = $_FILES['image']['name'];
+    $file_size = $_FILES['image']['size'];
+    $file_temp = $_FILES['image']['tmp_name'];
+     $uploaded_imagecheck="img2/".$file_name;
+      $div = explode('.', $file_name);
+    $file_ext = strtolower(end($div));
+    $unique_image = substr(md5(time()), 0, 10).'.'.$file_ext;
+    $uploaded_image = "img2/".$unique_image;
+            //       $permited  = array('jpg', 'jpeg', 'png', 'gif');
+            //     $file_name = $_FILES['image']['name'];
+            //     $file_size = $_FILES['image']['size'];
+            //     $file_temp = $_FILES['image']['tmp_name'];
+            //   $uploaded_image="img2/".$file_name;
+                if($uploaded_imagecheck!='img2/'){
+                      $subject=$_SESSION["subject"];
+                      $no=$_GET['edit'];
+                      $model=$_GET['model'];
+                     $delete="select*from questions  WHERE ques_no=$no AND model=$model AND subject1='$subject' ";
+                       $result=$db->select($delete);
+                     $imaged=$result->fetch_assoc();
+                  
+                     $img=$imaged['image'];
+                     //   echo $img;
+                  unlink($img); 
+                    
+          
+                         if(empty($question)||empty($modelNo)||empty($option1)||empty($option2)||empty($option3)||empty($option4)||empty($correctAns)){
+          $msg='<div class="alert alert-danger" id="success-alert">
+          <button type="button" class="close" data-dismiss="alert">x</button>
+          <strong>Field Must Not Be Empty!</strong></div> ';
+          echo'<script>toastr.error("Field Must Not Be empty")</script>';
+        }
+        //   elseif($result3){
+        //       $msg="<span class='alert alert-danger'>Already Added</span>";   
+        //   }
+        else{
+           $quesNo=$_GET['edit'];
+            move_uploaded_file($file_temp, $uploaded_image);
+          $update="UPDATE questions SET question='$question',option1='$option1',option2='$option2',option3='$option3',option4='$option4',ans='$correctAns',image='$uploaded_image'
+          WHERE ques_no=$quesNo AND model=$modelNo AND subject1='$subject' ";
+           
+          $result=$db->update($update);
+          if($result){
+            $msg='<div class="alert alert-success" id="success-alert">
+            <button type="button" class="close" data-dismiss="alert">x</button>
+            <strong>Question Updated Successfully!</strong></div> ';
+            echo'<script>toastr.error("Field Must Not Be empty")</script>';
+         
+           
+          }
+          else{
+            $msg="<span class='alert alert-danger'>Something went wrong</span>";
+          }
+
+        }
+                }
+                else{ 
+                    
+                       if(empty($question)||empty($modelNo)||empty($option1)||empty($option2)||empty($option3)||empty($option4)||empty($correctAns)){
+          $msg='<div class="alert alert-danger" id="success-alert">
+          <button type="button" class="close" data-dismiss="alert">x</button>
+          <strong>Field Must Not Be Empty!</strong></div> ';
+          echo'<script>toastr.error("Field Must Not Be empty")</script>';
+        }
+        //   elseif($result3){
+        //       $msg="<span class='alert alert-danger'>Already Added</span>";   
+        //   }
+        else{
+           $quesNo=$_GET['edit'];
+          $update="UPDATE questions SET question='$question',option1='$option1',option2='$option2',option3='$option3',option4='$option4',ans='$correctAns'
+          WHERE ques_no=$quesNo AND model=$modelNo AND subject1='$subject' ";
+          $result=$db->update($update);
+          if($result){
+            $msg='<div class="alert alert-success" id="success-alert">
+            <button type="button" class="close" data-dismiss="alert">x</button>
+            <strong>Question Updated Successfully!</strong></div> ';
+            echo'<script>toastr.error("Field Must Not Be empty")</script>';
+         
+           
+          }
+          else{
+            $msg="<span class='alert alert-danger'>Something went wrong</span>";
+          }
+
+        }
+                    
+                    
+                }
+                
+           
+     
+              
+          }
+          //if not mathematics
+          else{
+                // error_reporting(0);
         $modelNo=$_POST['modelNo'];
         $question=$_POST['question'];
         
@@ -78,6 +203,10 @@ else{
           }
 
         }
+              
+              
+          }
+     
 
       }
 ?>
@@ -151,7 +280,7 @@ else{
           }
         ?>
          <div style="max-width:650px;margin: 0 auto;display: block;background: #e0e0e0;">
-         <form action="" method="post" style="padding: 2px 28px">
+         <form action="" method="post" style="padding: 2px 28px" enctype="multipart/form-data">
          <?php 
         $subject=$_SESSION["subject"];
         $no=$_GET['edit'];
@@ -171,6 +300,16 @@ else{
     <textarea class="form-control" id="exampleFormControlTextarea1" name="question"  rows="3">
         <?php echo$row1['question'] ?></textarea>
   </div>
+   <?php if($_SESSION['subject']=='Mathematics'){?>
+            <div class="form-group">
+                <?php if($row1['image']!=null){ ?>
+      <img src="<?php echo$row1['image'] ?>" style="width:150px" alt="image">
+       <input type="file" class="form-control" id="" name="image"  placeholder="image">
+      
+      <?php }?>
+  </div>
+              <?php } ?>
+
   <div class="form-group">
     <label for="exampleInputEmail1">Option 1</label>
     <input type="text" class="form-control" id="" name="option1" value="<?php echo $row1['option1'] ?>"  placeholder="Option 1">

@@ -111,6 +111,9 @@
              <tr>
                <th>No</th>
                <th>Question</th>
+               <?php if($_SESSION['subject']=='Mathematics'){?>
+               <th>Image</th>
+              <?php } ?>
                <th>Option 1</th>
                <th>Option 2</th>
                <th>Option 3</th>
@@ -137,6 +140,9 @@
                   <?php echo $i++;?>
                 </td>
                 <td><?php echo $row['question']; ?></td>
+                 <?php if($_SESSION['subject']=='Mathematics'){?>
+               <td> <img src="<?php echo$row['image'] ?>" style="width:150px"> </td>
+              <?php } ?>
                  <td><?php echo $row['option1']; ?></td>
                <td><?php echo $row['option2']; ?></td>
                <td><?php echo $row['option3']; ?></td>

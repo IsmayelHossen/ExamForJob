@@ -56,6 +56,15 @@ if(isset($_GET['logout'])&&$_GET['logout']=='logout'){
 <h4 style="font-size: 18px;
 padding: 9px 2px;
 color:#2f7b62;;"><?php echo $row['ques_no'] ?>. <?php echo $row['question'] ?> </h4>
+  <?php if($row['image']){
+            
+            ?>
+            <div style="max-width: 400px" >
+                <img src="../admin/<?php echo $row['image'] ?>" style="margin-top:2px" class="img-fluid">
+            </div>
+            <?php
+        }
+        ?>
        <ul>
            
                <?php 
@@ -168,6 +177,15 @@ $table.=' <tr>
                    
             ?>
         <h4 style="font-size: 18px;background: #c2d0cc;padding: 9px 2px;"><?php echo $row['ques_no'] ?>. <?php echo $row['question'] ?> </h4>
+          <?php if($row['image']){
+            
+            ?>
+            <div style="max-width: 400px" >
+                <img src="../admin/<?php echo $row['image'] ?>" style="margin-top:2px" class="img-fluid">
+            </div>
+            <?php
+        }
+        ?>
        <ul>
            <li>
                <?php 

@@ -31,6 +31,7 @@ if(isset($_GET['logout'])&&$_GET['logout']=='logout'){
 text-shadow: 1px 2px #88919b;
 font-family: bold;
 font-weight: 700;">Routine</h2>
+<embed src="pdf/taker.pdf" type="application/pdf" width="100%" height="600px" style="margin:0 auto,display:block" />
                 <div class="table-responsive">
                   <table class="table table-striped">
                     <thead>

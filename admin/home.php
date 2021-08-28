@@ -26,7 +26,6 @@ else{
        // error_reporting(0);
         $modelNo=$_POST['modelNo'];
         $question=$_POST['question'];
-        
        // $qusNo=$_POST['queNo'];
         $option1=$_POST['option1'];
         $option2=$_POST['option2'];
@@ -52,13 +51,79 @@ else{
           
         //  $query2="SELECT*FROM questions WHERE subject1='$subject' AND model=$modelNo AND ques_no=$count2 ";
         //   $result3=$db->select($query2);
-         
-           
-        if(empty($question)||empty($modelNo)||empty($option1)||empty($option2)||empty($option3)||empty($option4)||empty($correctAns)||empty($topics)){
+        
+        //if image is select
+          $permited  = array('jpg', 'jpeg', 'png', 'gif');
+                $file_name = $_FILES['image']['name'];
+                $file_size = $_FILES['image']['size'];
+                $file_temp = $_FILES['image']['tmp_name'];
+               $uploaded_image="img2/".$file_name;
+         if($uploaded_image!='img2/'){
+                     if(empty($modelNo)||empty($option1)||empty($option2)||empty($option3)||empty($option4)||empty($correctAns)||empty($topics)){
           $msg='<div class="alert alert-danger" id="success-alert">
           <button type="button" class="close" data-dismiss="alert">x</button>
           <strong>Field Must Not Be Empty!</strong></div> ';
-          echo'<script>toastr.error("Field Must Not Be empty")</script>';
+          echo'<script>toastr.error("Field Must Not Be empty 1")</script>';
+        }
+        //   elseif($result3){
+        //       $msg="<span class='alert alert-danger'>Already Added</span>";   
+        //   }
+        else{
+            $query0="SELECT*FROM timeMarks WHERE model=$modelNo AND subject1='$subject' ";
+          $result0=$db->select($query0);
+           $row0=$result0->fetch_assoc();
+           $quesCheck=$row0['questions'];
+           
+          $query1="SELECT*FROM questions WHERE model=$modelNo AND subject1='$subject' ORDER BY ques_no DESC";
+          $result1=$db->select($query1);
+           $check=mysqli_num_rows($result1);
+          $row=$result1->fetch_assoc();
+           $number=$row['ques_no'];
+           
+           if($check=='0'){
+             $count=1;  
+           }
+           else{
+              $count=$number+1; 
+           }
+           if($check<$quesCheck){
+                 
+            move_uploaded_file($file_temp, $uploaded_image);
+        
+                    $query="INSERT INTO questions(subject1,model,question,ques_no,option1,option2,option3,option4,ans,email,active1,topics,image)VALUES('$subject','$modelNo','$question','$count','$option1','$option2','$option3','$option4','$correctAns','$email',0,'$topics','$uploaded_image')";
+          $result=$db->insert($query);
+          if($result){
+            $msg='<div class="alert alert-success" id="success-alert">
+            <button type="button" class="close" data-dismiss="alert">x</button>
+            <strong>'.$count.' Questions Added Successfully!</strong></div> ';
+            echo'<script>toastr.error("Field Must Not Be empty")</script>';
+         
+           
+          }
+          else{
+            $msg="<span class='alert alert-danger'>Something went wrong</span>";
+          }
+               
+           }
+           else{
+                $msg='<div class="alert alert-danger" id="success-alert">
+          <button type="button" class="close" data-dismiss="alert">x</button>
+          <strong>Total='.$quesCheck.' Questions Added Successfully.If you want add more questions please update total question number</strong></div> ';
+          echo'<script>toastr.error("Field Must Not Be empty")</script>';  
+           }
+           
+
+        }
+             
+         }
+         
+           //if image isnot select and question type
+         else{
+                     if(empty($question)||empty($modelNo)||empty($option1)||empty($option2)||empty($option3)||empty($option4)||empty($correctAns)||empty($topics)){
+          $msg='<div class="alert alert-danger" id="success-alert">
+          <button type="button" class="close" data-dismiss="alert">x</button>
+          <strong>Field Must Not Be Empty!</strong></div> ';
+          echo'<script>toastr.error("Field Must Not Be empty 2q")</script>';
         }
         //   elseif($result3){
         //       $msg="<span class='alert alert-danger'>Already Added</span>";   
@@ -106,6 +171,10 @@ else{
            
 
         }
+             
+         }
+           
+
 
       }
 ?>
@@ -284,7 +353,7 @@ if(isset($_POST['submitTime'])){
           }
         ?>
          <div style="max-width:650px;margin: 0 auto;display: block;background: #e0e0e0;">
-         <form action="" method="post" style="padding: 2px 28px">
+         <form action="" method="post" style="padding: 2px 28px" enctype="multipart/form-data">
          <div class="form-group">
     <label for="exampleInputEmail1">Model Test No.</label><br>
     <span><span style="color:red">*</span>Please before add questions (add time and marks)where included also model number .</span>
@@ -304,10 +373,21 @@ if(isset($_POST['submitTime'])){
     <input type="text" class="form-control" id="" name="topics"   value="<?php echo $row1['topics'] ?>" readonly>
    
   </div>
+ 
   <div class="form-group">
-    <label for="exampleFormControlTextarea1">Question</label>
+
+      <label for="exampleFormControlTextarea1">Question</label>
+        <?php if($_SESSION["subject"]=='Mathematics'){ ?>
+              <p style="color:red">*If you face any problem to write mathematics equestion by typing please write it down  on your paper and take it's photo then upload it.</p>
+    <label for="exampleFormControlTextarea1">Type Question Or Add Image Or Both</label>
+      <?php }?>
     <textarea class="form-control" id="exampleFormControlTextarea1" name="question" rows="3"></textarea>
   </div>
+   <?php if($_SESSION["subject"]=='Mathematics'){ ?>
+  <div class="form-group">
+   <input type="file" class="form-control" id="" name="image"  placeholder="image">
+  </div>
+  <?php }?>
   <div class="form-group">
     <label for="exampleInputEmail1">Option 1</label>
     <input type="text" class="form-control" id="" name="option1"  placeholder="Option 1">

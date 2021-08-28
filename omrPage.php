@@ -165,7 +165,17 @@ border-color: #7b0e13;color:#fff"><b style="font-size:20px" >Scrutineer</b>: <?p
 
                    
             ?>
-        <h4 style="font-size: 18px;background: #c2d0cc;padding: 9px 2px;"><?php echo $i ?>. <?php echo $row['question'] ?> </h4>
+        <h4 style="font-size: 18px;background: #c2d0cc;padding: 9px 2px;margin-bottom:2px"><?php echo $i ?>. <?php echo $row['question'] ?>
+        <?php if($row['image']){
+            
+            ?>
+            <div style="max-width: 400px" >
+                <img src="../admin/<?php echo $row['image'] ?>" style="margin-top:2px" class="img-fluid">
+            </div>
+            <?php
+        }
+        ?>
+        </h4>
         <input  type="radio" name="optionS[<?php echo$row['ques_no'];?>]" value="<?php echo $row['option1'] ?>"><?php echo $row['option1'] ?><br>
         <input  type="radio" name="optionS[<?php echo$row['ques_no'];?>]" value="<?php echo $row['option2'] ?>"><?php echo $row['option2'] ?><br>
         <input  type="radio" name="optionS[<?php echo$row['ques_no'];?>]" value="<?php echo $row['option3'] ?>"><?php echo $row['option3'] ?><br>
